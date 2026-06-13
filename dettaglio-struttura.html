@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio struttura | Adamantis Village</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root {
+            --blu-navy: #1A365D;
+            --oro: #D4AF37;
+            --oro-hover: #b5952f;
+            --sfondo-chiaro: #F7FAFC;
+            --testo-scuro: #333333;
+            --grigio-testo: #666666;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--sfondo-chiaro);
+            color: var(--testo-scuro);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--blu-navy);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--oro);
+        }
+
+        .hero-dettaglio {
+            min-height: 420px;
+            background:
+                linear-gradient(rgba(26, 54, 93, 0.55), rgba(26, 54, 93, 0.75));
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        .hero-dettaglio h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-dettaglio p {
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 5%;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 35px;
+            align-items: start;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .box h2 {
+            color: var(--blu-navy);
+            margin-bottom: 15px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .info-card {
+            background-color: var(--sfondo-chiaro);
+            padding: 18px;
+            border-radius: 12px;
+            border-left: 5px solid var(--oro);
+            margin-top: 15px;
+        }
+
+        .info-card strong {
+            color: var(--blu-navy);
+        }
+
+        .servizi {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .servizi span {
+            background-color: #f8efd0;
+            color: var(--blu-navy);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .soluzione {
+            background-color: var(--sfondo-chiaro);
+            padding: 18px;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #e5e5e5;
+        }
+
+        .soluzione h3 {
+            color: var(--blu-navy);
+            margin-bottom: 8px;
+        }
+
+        form {
+            display: grid;
+            gap: 15px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--oro);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        label {
+            color: var(--blu-navy);
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            text-align: center;
+            background-color: var(--oro);
+            color: var(--blu-navy);
+            padding: 14px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: var(--oro-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--blu-navy);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #0d1e36;
+            color: white;
+        }
+
+        .errore {
+            background-color: #ffe0e0;
+            border: 2px solid #cc0000;
+            color: #8b0000;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--grigio-testo);
+            margin-bottom: 35px;
+        }
+
+        .totale {
+            text-align: center;
+            background-color: var(--blu-navy);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 25px;
+        }
+
+        .totale p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .totale span {
+            color: var(--oro);
+            font-size: 2.3rem;
+            font-weight: bold;
+        }
+
+        .note {
+            margin-top: 25px;
+            color: var(--grigio-testo);
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #0d1e36;
+            color: #aaa;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 850px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-dettaglio h1 {
+                font-size: 2.2rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">Adamantis Village</a>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#chi-siamo">Chi Siamo</a>
+        <a href="strutture.html">Le Strutture</a>
+        <a href="index.html#contatti">Contatti</a>
+    </nav>
+</header>
+
+<section class="hero-dettaglio" id="heroDettaglio">
+    <div>
+        <h1 id="titoloStruttura">Dettaglio struttura</h1>
+        <p id="sottotitoloStruttura"></p>
+    </div>
+</section>
+
+<main class="container" id="contenutoStruttura"></main>
+
+<footer>
+    <p>&copy; 2026 Orizzonti Turistici. Tutti i diritti riservati.</p>
+</footer>
+
+<script src="dettaglio-struttura.js"></script>
+<script src="preventivo.js"></script>
+
+</body>
+</html>
