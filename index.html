@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <form action="preventivo.php" method="POST"></form>
+    <title>Gruppo Turistico | Vacanze per tutte le generazioni</title>
+    <style>
+        /* Variabili Palette Colori */
+        :root {
+            --blu-navy: #1A365D;
+            --oro: #D4AF37;
+            --oro-hover: #b5952f;
+            --sfondo-chiaro: #F7FAFC;
+            --testo-scuro: #333333;
+        }
+
+        /* Reset e Stili di Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--sfondo-chiaro); 
+            color: var(--testo-scuro); 
+            line-height: 1.6;
+        }
+        /* Effetto Smooth Scroll */
+        html { scroll-behavior: smooth; }
+
+        /* Barra di Navigazione */
+        header { 
+            background-color: var(--blu-navy); 
+            padding: 1.2rem 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .logo { color: white; font-size: 1.5rem; font-weight: bold; text-decoration: none;}
+        nav a { 
+            color: white; 
+            text-decoration: none; 
+            margin-left: 25px; 
+            font-weight: 500; 
+            transition: color 0.3s ease;
+        }
+        nav a:hover { color: var(--oro); }
+
+        /* Hero Section (Inizio Pagina) */
+        .hero { 
+            /* Sfondo temporaneo per dare l'idea del mare */
+            background: linear-gradient(rgba(26, 54, 93, 0.7), rgba(26, 54, 93, 0.8)), 
+                        url('https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover; 
+            height: 85vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            color: white; 
+            padding: 0 20px;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2;}
+        .hero p { font-size: 1.2rem; margin-bottom: 2.5rem; max-width: 700px; }
+
+        /* Bottoni Call-to-Action */
+        .cta-group { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;}
+        .btn{ 
+                display: inline-block;
+                padding: 15px 35px; 
+                border-radius: 8px; 
+                font-size: 1.1rem;
+                font-weight: bold; 
+                text-decoration: none; 
+                transition: all 0.3s ease; 
+                border: none; 
+                cursor: pointer;
+            }
+        .btn-oro { background-color: var(--oro); color: var(--blu-navy); }
+        .btn-oro:hover { 
+            background-color: var(--oro-hover); 
+            transform: translateY(-3px); 
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+        .btn-outline { border: 2px solid var(--oro); color: var(--oro); background: transparent;}
+        .btn-outline:hover { 
+            background-color: var(--oro); 
+            color: var(--blu-navy); 
+            transform: translateY(-3px); 
+        }
+
+        /* Sezione Target (Box Informativi) */
+        .targets { padding: 5rem 5%; text-align: center; }
+        .targets h2 { color: var(--blu-navy); margin-bottom: 3rem; font-size: 2.5rem;}
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 30px; 
+        }
+        .card { 
+            background: white; 
+            padding: 40px 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        }
+        .card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1); 
+        }
+        .card h3 { color: var(--blu-navy); margin-bottom: 15px; font-size: 1.5rem;}
+        .card p { color: #555; }
+
+        /* Sezione Offerte */
+.offerte {
+    padding: 5rem 5%;
+    background: linear-gradient(180deg, #ffffff 0%, #F7FAFC 100%);
+    text-align: center;
+    scroll-margin-top: 100px;
+}
+
+.offerte h2 {
+    color: var(--blu-navy);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.offerte .intro {
+    color: #555;
+    max-width: 650px;
+    margin: 0 auto 3rem;
+}
+
+.offerte-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+.offerta-card {
+    background: white;
+    padding: 35px 28px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    min-height: 360px;
+    transition: all 0.3s ease;
+    border-top: 5px solid var(--oro);
+}
+
+.offerta-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 35px rgba(0,0,0,0.13);
+}
+
+.offerta-icon {
+    font-size: 2.7rem;
+    margin-bottom: 15px;
+}
+
+.offerta-card h3 {
+    color: var(--blu-navy);
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+}
+
+.offerta-card p {
+    color: #555;
+    margin-bottom: 18px;
+    flex-grow: 1;
+}
+
+.prezzo {
+    color: var(--blu-navy);
+    background-color: #f8efd0;
+    padding: 10px 15px;
+    border-radius: 30px;
+    font-weight: bold;
+    margin-bottom: 22px;
+    display: inline-block;
+}
+
+.btn-small {
+    padding: 12px 24px;
+    font-size: 1rem;
+    align-self: center;
+}
+
+/* Sezione Preventivo */
+.preventivo {
+    padding: 5rem 5%;
+    background-color: var(--blu-navy);
+    color: white;
+    text-align: center;
+    scroll-margin-top: 100px;
+}
+
+.preventivo h2 {
+    color: var(--oro);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.preventivo p {
+    max-width: 650px;
+    margin: 0 auto 2.5rem;
+    color: #e2e8f0;
+}
+
+.preventivo form {
+    max-width: 850px;
+    margin: 0 auto;
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.preventivo input,
+.preventivo select,
+.preventivo textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+}
+
+.preventivo input:focus,
+.preventivo select:focus,
+.preventivo textarea:focus {
+    border-color: var(--oro);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+.preventivo textarea {
+    grid-column: span 2;
+    resize: vertical;
+    min-height: 120px;
+}
+
+.preventivo button {
+    grid-column: span 2;
+    background-color: var(--oro);
+    color: var(--blu-navy);
+    border: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.preventivo button:hover {
+    background-color: var(--oro-hover);
+    transform: translateY(-2px);
+}
+
+/* Responsive offerte e preventivo */
+@media (max-width: 768px) {
+    .preventivo form {
+        grid-template-columns: 1fr;
+        padding: 25px;
+    }
+
+    .preventivo textarea,
+    .preventivo button {
+        grid-column: span 1;
+    }
+}
+
+        /* Sezione Raccolta Email */
+        .newsletter { background-color: var(--blu-navy); color: white; padding: 4rem 5%; text-align: center; }
+        .newsletter h2 { color: var(--oro); margin-bottom: 15px;}
+        .newsletter input { 
+            padding: 15px; 
+            width: 100%;
+            max-width: 350px; 
+            border: none; 
+            border-radius: 8px 0 0 8px; 
+            outline: none;
+            font-size: 1rem;
+        }
+        .newsletter button { 
+            padding: 15px 30px; 
+            border-radius: 0 8px 8px 0; 
+            border: none; 
+            background-color: var(--oro); 
+            color: var(--blu-navy); 
+            font-weight: bold; 
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .newsletter button:hover { background-color: var(--oro-hover); }
+        .form-group { display: flex; justify-content: center; margin-top: 25px;}
+
+        /* Footer */
+        footer { background-color: #0d1e36; color: #aaa; text-align: center; padding: 2rem; font-size: 0.9rem;}
+        
+        /* Adattabilità per Smartphone */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; }
+            nav a { margin: 0 10px; }
+            .hero h1 { font-size: 2.5rem; }
+            .form-group { flex-direction: column; align-items: center; gap: 10px;}
+            .newsletter input, .newsletter button { border-radius: 8px; width: 100%; max-width: 350px;}
+        }
+
+        .date-field {
+    text-align: left;
+}
+
+.date-field label {
+    display: block;
+    color: var(--blu-navy);
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+}
+
+.date-field input {
+    width: 100%;
+}
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigazione -->
+    <header>
+        <a href="#" class="logo">Adamantis Village </a>
+        <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#chi-siamo">Chi Siamo</a>
+    <a href="./strutture.html">Le Strutture</a>
+    <a href="index.html#contatti">Contatti</a>
+</nav>
+    </header>
+
+    <!-- Hero Section (Impatto Iniziale) -->
+    <section class="hero" id="home">
+        <h1>Il tuo viaggio, la nostra accoglienza</h1>
+        <p>Dal relax in hotel di lusso al divertimento sfrenato nei nostri villaggi. Seleziona la tua destinazione e lasciati guidare dall'eccellenza.</p>
+        <div class="cta-group">
+    <a href="#preventivo" class="btn btn-oro">Richiedi Preventivo</a>
+    <a href="#offerte" class="btn btn-outline">Scopri le Offerte</a>
+</div> 
+    </section>
+
+    <!-- Sezione Smistamento Target (Design Smooth) -->
+    <section class="targets" id="chi-siamo">
+        <h2>Un'esperienza per ogni generazione</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>👨‍👩‍👧‍👦 Famiglie</h3>
+                <p>Villaggio Anfitrite e Resort delle Palme: animazione, grandi spazi e menù dedicati per la tranquillità dei genitori e la gioia dei bambini.</p>
+            </div>
+            <div class="card">
+                <h3>🌅 Terza Età</h3>
+                <p>Lido Apeiron e Contado dell'Agro Pontino offrono comfort assoluto, aria salubre e assistenza per un riposo rigenerante.</p>
+            </div>
+            <div class="card">
+                <h3>🎒 Gite Scolastiche</h3>
+                <p>Logistica impeccabile, grandi capienze e prezzi agevolati. Organizza viaggi d'istruzione indimenticabili in totale sicurezza.</p>
+            </div>
+            <div class="card">
+                <h3>🎉 Young (16-20)</h3>
+                <p>Scogliere Nere a Tropea o Partenza di Penelope a Favignana. Eventi, sconti comitive e puro divertimento per i più giovani.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sezione Offerte -->
+<section class="offerte" id="offerte">
+    <h2>Scopri le nostre offerte</h2>
+    <p class="intro">
+        Abbiamo creato pacchetti pensati per ogni tipo di viaggiatore: famiglie, giovani, gruppi scolastici e soggiorni relax.
+    </p>
+
+    <div class="offerte-grid">
+        <div class="offerta-card">
+            <div class="offerta-icon">👨‍👩‍👧‍👦</div>
+            <h3>Offerta Famiglia</h3>
+            <p>
+                Villaggi con animazione, grandi spazi, menù dedicati e attività pensate per bambini e genitori.
+            </p>
+            <div class="prezzo">Da 499€ a persona</div>
+            <a href="#preventivo" class="btn btn-oro btn-small">Richiedi info</a>
+        </div>
+
+        <div class="offerta-card">
+            <div class="offerta-icon">🎉</div>
+            <h3>Offerta Giovani</h3>
+            <p>
+                Soggiorni per gruppi di ragazzi con eventi, sport, serate organizzate e sconti comitive.
+            </p>
+            <div class="prezzo">Da 349€ a persona</div>
+            <a href="#preventivo" class="btn btn-oro btn-small">Richiedi info</a>
+        </div>
+
+        <div class="offerta-card">
+            <div class="offerta-icon">🌅</div>
+            <h3>Offerta Relax</h3>
+            <p>
+                Hotel e resort tranquilli per coppie e terza età, con servizi comodi e ambienti rilassanti.
+            </p>
+            <div class="prezzo">Da 399€ a persona</div>
+            <a href="#preventivo" class="btn btn-oro btn-small">Richiedi info</a>
+        </div>
+    </div>
+</section>
+
+<!-- Sezione Richiedi Preventivo -->
+<!-- Eventi Giovani Low Cost (inserito dall'agent) -->
+<section class="offerte" id="eventi-low-cost">
+    <h2>Eventi Giovani Low Cost</h2>
+    <p class="intro">
+        Gli eventi giovani low cost sono disponibili solo in alcune date e strutture selezionate.
+    </p>
+
+    <div class="offerte-grid">
+        <div class="offerta-card">
+            <div class="offerta-icon">🎉</div>
+            <h3>Young Summer Tropea</h3>
+            <p><strong>Struttura:</strong> Scogliere Nere</p>
+            <p><strong>Date:</strong> 8 luglio - 12 luglio 2026</p>
+            <div class="prezzo">Da 45€ a persona/notte</div>
+            <a href="struttura.php?id=scogliere-nere&pacchetto=giovani-low-cost&arrivo=2026-07-08&partenza=2026-07-12" class="btn btn-oro btn-small">
+                Prenota evento
+            </a>
+        </div>
+
+        <div class="offerta-card">
+            <div class="offerta-icon">🏝️</div>
+            <h3>Favignana Young Party</h3>
+            <p><strong>Struttura:</strong> Partenza di Penelope</p>
+            <p><strong>Date:</strong> 8 luglio - 12 luglio 2026</p>
+            <div class="prezzo">Da 48€ a persona/notte</div>
+            <a href="struttura.php?id=partenza-penelope&pacchetto=giovani-low-cost&arrivo=2026-07-08&partenza=2026-07-12" class="btn btn-oro btn-small">
+                Prenota evento
+            </a>
+        </div>
+
+        <div class="offerta-card">
+            <div class="offerta-icon">🌊</div>
+            <h3>Calabria Low Cost</h3>
+            <p><strong>Struttura:</strong> Villaggio Anfitrite</p>
+            <p><strong>Date:</strong> 15 luglio - 19 luglio 2026</p>
+            <div class="prezzo">Da 42€ a persona/notte</div>
+            <a href="struttura.php?id=villaggio-anfitrite&pacchetto=giovani-low-cost&arrivo=2026-07-15&partenza=2026-07-19" class="btn btn-oro btn-small">
+                Prenota evento
+            </a>
+        </div>
+
+        <div class="offerta-card">
+            <div class="offerta-icon">🌴</div>
+            <h3>Sardegna Young Week</h3>
+            <p><strong>Struttura:</strong> Resort delle Palme</p>
+            <p><strong>Date:</strong> 22 luglio - 26 luglio 2026</p>
+            <div class="prezzo">Da 50€ a persona/notte</div>
+            <a href="struttura.php?id=resort-palme&pacchetto=giovani-low-cost&arrivo=2026-07-22&partenza=2026-07-26" class="btn btn-oro btn-small">
+                Prenota evento
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Sezione Richiedi Preventivo -->
+<section class="preventivo" id="preventivo">
+    <h2>Richiedi un preventivo</h2>
+    <p>
+        Compila il modulo con le tue preferenze e ti proporremo la soluzione più adatta alla tua vacanza.
+    </p>
+
+    <form action="preventivo.php" method="POST">
+    <input type="text" name="nome" placeholder="Nome e cognome" required>
+
+    <input type="email" name="email" placeholder="Email" required>
+
+    <input type="tel" name="telefono" placeholder="Telefono">
+
+    <select name="destinazione" required>
+        <option value="">Scegli una destinazione</option>
+
+        <option value="villaggio-anfitrite">Villaggio Anfitrite</option>
+        <option value="resort-palme">Resort delle Palme</option>
+        <option value="scogliere-nere">Scogliere Nere</option>
+        <option value="promontorio-anti-elios">Promontorio Anti-elios</option>
+        <option value="hotel-baroni">Hotel Baroni d'Aragosta</option>
+        <option value="etranger-glace">Étranger Glace & Tennis</option>
+        <option value="insenatura-ombrosa">Insenatura Ombrosa</option>
+        <option value="contado-agro-pontino">Contado dell'Agro Pontino</option>
+        <option value="partenza-penelope">Partenza di Penelope</option>
+        <option value="lido-apeiron">Lido Apeiron</option>
+    </select>
+
+    <select name="tipo_alloggio" required>
+    <option value="">Scegli il tipo di alloggio</option>
+    <option value="camera-hotel">Camera hotel / standard</option>
+    <option value="bungalow">Bungalow</option>
+</select>
+
+    <input 
+        type="number" 
+        name="numero_persone" 
+        placeholder="Inserisci il numero di persone" 
+        min="1" 
+        required
+    >
+
+    <div class="date-field">
+        <label for="data_arrivo">Data di arrivo</label>
+        <input type="date" id="data_arrivo" name="data_arrivo" required>
+    </div>
+
+    <div class="date-field">
+        <label for="data_partenza">Data di partenza</label>
+        <input type="date" id="data_partenza" name="data_partenza" required>
+    </div>
+
+    <select name="trattamento" required>
+        <option value="">Tipo di trattamento</option>
+        <option value="mezza-pensione">Mezza pensione</option>
+        <option value="pensione-completa">Pensione completa</option>
+        <option value="all-inclusive">All inclusive</option>
+    </select>
+
+    <textarea name="messaggio" placeholder="Scrivi eventuali richieste specifiche..."></textarea>
+
+    <button type="submit">Invia richiesta di preventivo</button>
+</form>
+</section>  
+
+    <!-- Sezione Lead Generation -->
+    <section class="newsletter" id="contatti">
+        <h2>Rimaniamo in Contatto</h2>
+        <p>Iscriviti per ricevere il 10% di sconto sulla tua prima prenotazione (Pensione Completa o Mezza Pensione).</p>
+        <form class="form-group" action="#" method="POST">
+            <input type="email" placeholder="Inserisci la tua migliore email..." required>
+            <button type="submit">Voglio lo Sconto</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Orizzonti Turistici. Tutti i diritti riservati.</p>
+    </footer>
+
+</body>
+</html>

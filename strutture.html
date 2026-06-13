@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Nostre Strutture | Orizzonti Turistici</title>
+    <style>
+        /* Variabili Palette Colori */
+        :root {
+            --blu-navy: #1A365D;
+            --oro: #D4AF37;
+            --oro-hover: #b5952f;
+            --sfondo-chiaro: #F7FAFC;
+            --testo-scuro: #333333;
+            --grigio-testo: #666666;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--sfondo-chiaro); 
+            color: var(--testo-scuro); 
+            line-height: 1.6;
+        }
+
+        /* Header Minimo per pagine interne */
+        header { 
+            background-color: var(--blu-navy); 
+            padding: 1rem 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo { color: white; font-size: 1.5rem; font-weight: bold; text-decoration: none;}
+        nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: 500; transition: 0.3s;}
+        nav a:hover { color: var(--oro); }
+
+        /* Intestazione Catalogo */
+        .page-header {
+            background-color: white;
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+        }
+        .page-header h1 { color: var(--blu-navy); font-size: 2.8rem; margin-bottom: 1rem; }
+        .page-header p { color: var(--grigio-testo); max-width: 600px; margin: 0 auto 2rem; font-size: 1.1rem; }
+
+        /* Barra dei Filtri */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        .filter-btn {
+            padding: 8px 20px;
+            border: 2px solid var(--blu-navy);
+            background: transparent;
+            color: var(--blu-navy);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--blu-navy);
+            color: white;
+        }
+
+        /* Griglia Strutture */
+        .catalog-container {
+            padding: 0 5% 5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* Stile delle Card Prodotto */
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        .card-img {
+            height: 220px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        /* Badge Tipologia (Hotel/Villaggio) */
+        .badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--oro);
+            color: var(--blu-navy);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .location {
+            color: var(--oro);
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .card-title {
+            color: var(--blu-navy);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        .card-desc {
+            color: var(--grigio-testo);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        /* Bottone Card */
+        .btn-card {
+            display: block;
+            text-align: center;
+            background-color: var(--blu-navy);
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-card:hover { background-color: var(--oro); color: var(--blu-navy); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; padding: 1rem;}
+            .page-header h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Adamantis Village</a>
+       <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#chi-siamo">Chi Siamo</a>
+    <a href="strutture.html" style="color: var(--oro);">Le Strutture</a>
+    <a href="index.html#contatti">Contatti</a>
+</nav>
+    </header>
+
+    <div class="page-header">
+        <h1>Trova la tua destinazione perfetta</h1>
+        <p>Esplora il nostro catalogo esclusivo. Dai grandi villaggi con animazione per le famiglie agli hotel intimi per il massimo del relax, abbiamo lo spazio perfetto per la tua prossima esperienza.</p>
+        
+        <div class="filters">
+    <button type="button" class="filter-btn active" data-filter="tutti">Tutti</button>
+    <button type="button" class="filter-btn" data-filter="villaggio">Villaggi</button>
+    <button type="button" class="filter-btn" data-filter="hotel">Hotel</button>
+    <button type="button" class="filter-btn" data-filter="mare">Mare</button>
+    <button type="button" class="filter-btn" data-filter="montagna">Montagna</button>
+</div>
+    </div>
+
+    <section class="catalog-container">
+        <div class="grid">
+
+            <!-- Villaggio Anfitrite -->
+            <div class="card" data-category="villaggio mare">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1540541338287-41700207dee6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <span class="badge">Villaggio</span>
+                </div>
+                <div class="card-content">
+                    <div class="location">📍 Sellia Marina, Calabria (Ionio)</div>
+                    <h3 class="card-title">Villaggio Anfitrite</h3>
+                    <p class="card-desc">Il fiore all'occhiello per le grandi famiglie. Un'oasi di divertimento con enormi spazi aperti, piscine scenografiche e un'animazione che renderà indimenticabile l'estate dei più piccoli.</p>
+                    <div class="card-meta">
+                        <span>👥 Capienza: 900</span>
+                        <span>⭐ Target: Famiglie/Eventi</span>
+                    </div>
+                    <a href="struttura.php?id=villaggio-anfitrite" class="btn-card">Scopri Tariffe e Dettagli</a>
+                </div>
+            </div>
+
+            <!-- Resort delle Palme -->
+            <div class="card" data-category="villaggio mare"> 
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1582610116397-edb318620f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <span class="badge">Villaggio</span>
+                </div>
+                <div class="card-content">
+                    <div class="location">📍 Platamona, Sardegna</div>
+                    <h3 class="card-title">Resort delle Palme</h3>
+                    <p class="card-desc">Immerso nei profumi della macchia mediterranea sarda, questo resort offre il perfetto equilibrio tra il relax assoluto della natura e i comfort di un villaggio premium.</p>
+                    <div class="card-meta">
+                        <span>👥 Capienza: 800</span>
+                        <span>⭐ Target: Famiglie/Gruppi</span>
+                    </div>
+                    <a href="struttura.php?id=resort-palme" class="btn-card">Scopri Tariffe e Dettagli</a>
+                </div>
+            </div>
+
+            <!-- Scogliere Nere -->
+            <div class="card" data-category="villaggio mare">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <span class="badge">Villaggio</span>
+                </div>
+                <div class="card-content">
+                    <div class="location">📍 Tropea, Calabria</div>
+                    <h3 class="card-title">Scogliere Nere</h3>
+                    <p class="card-desc">La meta definitiva per i giovani. Un'atmosfera vibrante, eventi serali, DJ set e l'accesso diretto a uno dei mari più belli d'Italia. Il luogo ideale per creare ricordi indelebili.</p>
+                    <div class="card-meta">
+                        <span>👥 Capienza: 500</span>
+                        <span>⭐ Target: Giovani 16-20</span>
+                    </div>
+                    <a href="struttura.php?id=scogliere-nere" class="btn-card">Scopri Tariffe e Dettagli</a>
+                </div>
+            </div>
+
+            <!-- Promontorio Anti-elios -->
+            <div class="card" data-category="hotel mare">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <span class="badge" style="background: var(--blu-navy); color: white;">Hotel</span>
+                </div>
+                <div class="card-content">
+                    <div class="location">📍 Tropea, Calabria</div>
+                    <h3 class="card-title">Promontorio Anti-elios</h3>
+                    <p class="card-desc">Un rifugio elegante incastonato sulla costa. Conosciuto per i suoi tramonti mozzafiato e il servizio impeccabile, è l'ideale per coppie e per chi cerca un soggiorno di alta classe.</p>
+                    <div class="card-meta">
+                        <span>👥 Capienza: 300</span>
+                        <span>⭐ Target: Relax/Coppie</span>
+                    </div>
+                    <a href="struttura.php?id=promontorio-anti-elios" class="btn-card">Scopri Tariffe e Dettagli</a>
+                </div>
+            </div>
+
+            <!-- Hotel Baroni d'Aragosta (Invernale) -->
+            <div class="card" data-category="hotel montagna">
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1551524164-687a55dd1126?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <span class="badge" style="background: #e0f2fe; color: var(--blu-navy);">Inverno</span>
+                </div>
+                <div class="card-content">
+                    <div class="location">📍 Sestriere, Piemonte</div>
+                    <h3 class="card-title">Hotel Baroni d'Aragosta</h3>
+                    <p class="card-desc">L'eccellenza in alta quota. Accesso diretto alle piste da sci, comfort avvolgente dopo una giornata sulla neve e una proposta culinaria in grado di scaldare cuore e palato.</p>
+                    <div class="card-meta">
+                        <span>👥 Capienza: 300</span>
+                        <span>⭐ Target: Neve/Settimane Bianche</span>
+                    </div>
+                    <a href="struttura.php?id=hotel-baroni" class="btn-card">Scopri Tariffe e Dettagli</a>
+                </div>
+            </div>
+
+            <!-- Étranger Glace & Tennis -->
+            <div class="card" data-category="hotel montagna"> 
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1522798514-97ceb8c4f1c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <span class="badge" style="background: var(--blu-navy); color: white;">Hotel</span>
+                </div>
+                <div class="card-content">
+                    <div class="location">📍 Ischia, Campania</div>
+                    <h3 class="card-title">Étranger Glace & Tennis</h3>
+                    <p class="card-desc">Benessere termale e sport in una cornice isolana esclusiva. Campi da tennis curati in ogni dettaglio e un'atmosfera signorile, perfetto per la terza età e amanti del wellness.</p>
+                    <div class="card-meta">
+                        <span>👥 Capienza: 250</span>
+                        <span>⭐ Target: Senior/Sportivi</span>
+                    </div>
+                    <a href="struttura.php?id=etranger-glace" class="btn-card">Scopri Tariffe e Dettagli</a>
+                </div>
+            </div>
+            <!-- Insenatura Ombrosa -->
+<div class="card" data-category="hotel mare">
+    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80');">
+        <span class="badge" style="background: var(--blu-navy); color: white;">Hotel</span>
+    </div>
+    <div class="card-content">
+        <div class="location">📍 Cilento, Salerno</div>
+        <h3 class="card-title">Insenatura Ombrosa</h3>
+        <p class="card-desc">
+            Hotel elegante immerso nella tranquillità del Cilento, ideale per chi cerca mare, relax e un soggiorno riservato in una cornice naturale suggestiva.
+        </p>
+        <div class="card-meta">
+            <span>👥 Capienza: 200</span>
+            <span>⭐ Target: Relax/Coppie</span>
+        </div>
+        <a href="struttura.php?id=insenatura-ombrosa" class="btn-card">Scopri Tariffe e Dettagli</a>
+    </div>
+</div>
+
+<!-- Contado dell'Agro Pontino -->
+<div class="card" data-category="hotel mare">
+    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80');">
+        <span class="badge" style="background: var(--blu-navy); color: white;">Hotel</span>
+    </div>
+    <div class="card-content">
+        <div class="location">📍 Argentario, Grosseto / Orbetello</div>
+        <h3 class="card-title">Contado dell'Agro Pontino</h3>
+        <p class="card-desc">
+            Hotel raffinato in una zona ricca di paesaggi naturali, mare e tranquillità. È adatto a soggiorni rilassanti, gruppi organizzati e terza età.
+        </p>
+        <div class="card-meta">
+            <span>👥 Capienza: 250</span>
+            <span>⭐ Target: Senior/Gruppi</span>
+        </div>
+        <a href="struttura.php?id=contado-agro-pontino" class="btn-card">Scopri Tariffe e Dettagli</a>
+    </div>
+</div>
+
+<!-- Partenza di Penelope -->
+<div class="card" data-category="villaggio mare">
+    <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80');">
+        <span class="badge">Villaggio</span>
+    </div>
+    <div class="card-content">
+        <div class="location">📍 Favignana, Sicilia</div>
+        <h3 class="card-title">Partenza di Penelope</h3>
+        <p class="card-desc">
+            Villaggio ideale per giovani, famiglie e gruppi. La posizione a Favignana permette di vivere mare, escursioni, divertimento e socialità.
+        </p>
+        <div class="card-meta">
+            <span>👥 Capienza: 400</span>
+            <span>⭐ Target: Giovani/Famiglie</span>
+        </div>
+        <a href="struttura.php?id=partenza-penelope" class="btn-card">Scopri Tariffe e Dettagli</a>
+    </div>
+</div>
+
+<!-- Lido Apeiron -->
+<div class="card" data-category="hotel mare"> 
+    <div class="card-img" style="background-image: url('https://www.aurumhotels.it/public/photogallery/_d7a1791.jpg');">
+        <span class="badge" style="background: var(--blu-navy); color: white;">Hotel</span>
+    </div>
+    <div class="card-content">
+        <div class="location">📍 Lido Riccio, Ortona</div>
+        <h3 class="card-title">Lido Apeiron</h3>
+        <p class="card-desc">
+            Hotel sul mare adatto a famiglie, coppie e terza età. La posizione a Lido Riccio offre comfort, tranquillità e una piacevole vista costiera.
+        </p>
+        <div class="card-meta">
+            <span>👥 Capienza: 300</span>
+            <span>⭐ Target: Relax/Famiglie</span>
+        </div>
+        <a href="struttura.php?id=lido-apeiron" class="btn-card">Scopri Tariffe e Dettagli</a>
+    </div>
+</div>
+
+        </div>
+    </section>
+    <script>
+    const bottoniFiltro = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".card");
+
+    bottoniFiltro.forEach(bottone => {
+        bottone.addEventListener("click", function() {
+            const filtro = this.getAttribute("data-filter");
+
+            bottoniFiltro.forEach(btn => btn.classList.remove("active"));
+            this.classList.add("active");
+
+            cards.forEach(card => {
+                const categorie = card.getAttribute("data-category");
+
+                if (filtro === "tutti" || categorie.includes(filtro)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
