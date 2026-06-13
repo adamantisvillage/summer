@@ -1,0 +1,9 @@
+/* Stili base condivisi
+   Aggiungi qui le regole globali del sito.
+*/
+:root{--blu-navy:#1A365D;--oro:#D4AF37;--sfondo-chiaro:#F7FAFC;--testo-scuro:#333}
+*{box-sizing:border-box}
+body{font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;background:var(--sfondo-chiaro);color:var(--testo-scuro);margin:0}
+a{color:var(--blu-navy);text-decoration:none}
+.btn-card{display:inline-block;padding:0.75rem 1rem;border-radius:6px;background:var(--blu-navy);color:#fff}
+.btn-card:hover{background:var(--oro);color:var(--blu-navy)}
