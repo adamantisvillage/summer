@@ -173,7 +173,7 @@ document.getElementById("formPreventivo").addEventListener("submit", function(e)
   const telefono = document.getElementById("telefono").value;
   const destinazione = document.getElementById("destinazione").value;
   const tipoAlloggio = document.getElementById("tipo_alloggio").value;
-  const tipoPacchetto = document.getElementById("tipo_pacchetto").value || "standard";
+  const tipoPacchetto = (document.getElementById("tipo_pacchetto") && document.getElementById("tipo_pacchetto").value) || "standard";
   const numeroPersone = parseInt(document.getElementById("numero_persone").value);
   const dataArrivo = document.getElementById("data_arrivo").value;
   const dataPartenza = document.getElementById("data_partenza").value;
@@ -235,14 +235,8 @@ document.getElementById("formPreventivo").addEventListener("submit", function(e)
     }
   }
 
-  const risultato = document.getElementById("risultatoPreventivo");
-
   if (errore) {
-    risultato.innerHTML = `
-      <div class="errore">
-        ${errore}
-      </div>
-    `;
+    showPreventivoModal(`<div class="errore">${errore}</div>`);
     return;
   }
 
@@ -270,7 +264,7 @@ document.getElementById("formPreventivo").addEventListener("submit", function(e)
 
   const totaleScontato = totale - (totale * sconto / 100);
 
-  risultato.innerHTML = `
+  const html = `
     <div class="container">
       <h1>Preventivo stimato</h1>
       <p class="subtitle">Ecco il riepilogo della tua richiesta di viaggio.</p>
@@ -363,4 +357,51 @@ document.getElementById("formPreventivo").addEventListener("submit", function(e)
       </p>
     </div>
   `;
+
+  showPreventivoModal(html);
 });
+
+/* Modal helper: crea e mostra un overlay con il contenuto del preventivo */
+function ensureModalStyles() {
+  if (document.getElementById('preventivo-modal-styles')) return;
+  const s = document.createElement('style');
+  s.id = 'preventivo-modal-styles';
+  s.textContent = `
+    .preventivo-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:2000;padding:20px;}
+    .preventivo-modal{background:white;border-radius:12px;max-width:1100px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 20px 50px rgba(0,0,0,0.4);position:relative;padding:20px}
+    .preventivo-close{position:absolute;top:10px;right:12px;background:transparent;border:none;font-size:1.8rem;cursor:pointer;color:#333}
+    @media(max-width:600px){.preventivo-modal{padding:12px}}
+  `;
+  document.head.appendChild(s);
+}
+
+function showPreventivoModal(htmlContent){
+  ensureModalStyles();
+  // rimuovi se esiste
+  const existing = document.getElementById('preventivoOverlay');
+  if (existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'preventivoOverlay';
+  overlay.className = 'preventivo-overlay';
+
+  const modal = document.createElement('div');
+  modal.className = 'preventivo-modal';
+  modal.innerHTML = `<button class="preventivo-close" aria-label="Chiudi">×</button><div class="preventivo-modal-body">${htmlContent}</div>`;
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+  // blocca scroll
+  const prevOverflow = document.body.style.overflow;
+  document.body.style.overflow = 'hidden';
+
+  function close(){
+    overlay.remove();
+    document.body.style.overflow = prevOverflow || '';
+  }
+
+  // chiudi al click sul bottone
+  modal.querySelector('.preventivo-close').addEventListener('click', close);
+  // chiudi cliccando fuori
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) close(); });
+}
