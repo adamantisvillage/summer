@@ -476,25 +476,26 @@
             </a>
         </div>
     </div>
-</section>
+    </section>
 
-<!-- Sezione Richiedi Preventivo -->
-<section class="preventivo" id="preventivo">
+    <!-- Sezione Richiedi Preventivo -->
+    <section class="preventivo" id="preventivo">
     <h2>Richiedi un preventivo</h2>
     <p>
         Compila il modulo con le tue preferenze e ti proporremo la soluzione più adatta alla tua vacanza.
     </p>
 
     <form id="formPreventivo">
+
         <div id="risultatoPreventivo"></div>
 
-    <input type="text" name="nome" placeholder="Nome e cognome" required>
+    <input type="text" id="nome" name="nome" placeholder="Nome e cognome" required>
 
-    <input type="email" name="email" placeholder="Email" required>
+    <input type="email" id="email" name="email" placeholder="Email" required>
 
-    <input type="tel" name="telefono" placeholder="Telefono">
+    <input type="tel" id="telefono" name="telefono" placeholder="Telefono">
 
-    <select name="destinazione" required>
+    <select id="destinazione" name="destinazione" required>
         <option value="">Scegli una destinazione</option>
 
         <option value="villaggio-anfitrite">Villaggio Anfitrite</option>
@@ -509,14 +510,15 @@
         <option value="lido-apeiron">Lido Apeiron</option>
     </select>
 
-    <select name="tipo_alloggio" required>
+    <select id="tipo_alloggio" name="tipo_alloggio" required>
     <option value="">Scegli il tipo di alloggio</option>
     <option value="camera-hotel">Camera hotel / standard</option>
     <option value="bungalow">Bungalow</option>
-</select>
+    </select>
 
     <input 
         type="number" 
+        id="numero_persone"
         name="numero_persone" 
         placeholder="Inserisci il numero di persone" 
         min="1" 
@@ -533,14 +535,16 @@
         <input type="date" id="data_partenza" name="data_partenza" required>
     </div>
 
-    <select name="trattamento" required>
+    <select id="trattamento" name="trattamento" required>
         <option value="">Tipo di trattamento</option>
         <option value="mezza-pensione">Mezza pensione</option>
         <option value="pensione-completa">Pensione completa</option>
         <option value="all-inclusive">All inclusive</option>
     </select>
 
-    <textarea name="messaggio" placeholder="Scrivi eventuali richieste specifiche..."></textarea>
+    <textarea id="messaggio" name="messaggio" placeholder="Scrivi eventuali richieste specifiche..."></textarea>
+
+    <input type="hidden" id="tipo_pacchetto" name="tipo_pacchetto" value="standard">
 
     <button type="submit">Invia richiesta di preventivo</button>
 </form>
