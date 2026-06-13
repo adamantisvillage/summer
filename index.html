@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <form action="preventivo.php" method="POST"></form>
+    
     <title>Gruppo Turistico | Vacanze per tutte le generazioni</title>
     <style>
         /* Variabili Palette Colori */
@@ -485,7 +485,9 @@
         Compila il modulo con le tue preferenze e ti proporremo la soluzione più adatta alla tua vacanza.
     </p>
 
-    <form action="preventivo.php" method="POST">
+    <form id="formPreventivo">
+        <div id="risultatoPreventivo"></div>
+
     <input type="text" name="nome" placeholder="Nome e cognome" required>
 
     <input type="email" name="email" placeholder="Email" required>
@@ -558,6 +560,6 @@
     <footer>
         <p>&copy; 2026 Orizzonti Turistici. Tutti i diritti riservati.</p>
     </footer>
-
+        <script src="preventivo.js"></script>
 </body>
 </html>
