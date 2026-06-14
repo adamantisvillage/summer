@@ -20,6 +20,11 @@ async function caricaDettaglioStruttura() {
         "Accept": "application/json"
       }
     });
+
+    if (!response.ok) {
+      throw new Error("Backend PHP non disponibile.");
+    }
+
     const data = await response.json();
 
     if (!data.ok) {
@@ -28,6 +33,13 @@ async function caricaDettaglioStruttura() {
 
     renderStruttura(data.struttura, data.trattamenti || []);
   } catch (error) {
+    const strutturaStatica = (window.SUMMER_DATA?.strutture || []).find(struttura => struttura.slug === id);
+
+    if (strutturaStatica) {
+      renderStruttura(strutturaStatica, window.SUMMER_DATA?.trattamenti || []);
+      return;
+    }
+
     contenuto.innerHTML = `
       <div class="errore">${escapeHtml(error.message)}</div>
       <a href="strutture.html" class="btn">Torna alle strutture</a>

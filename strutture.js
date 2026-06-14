@@ -11,6 +11,11 @@ async function caricaCatalogoStrutture() {
         "Accept": "application/json"
       }
     });
+
+    if (!response.ok) {
+      throw new Error("Backend PHP non disponibile.");
+    }
+
     const data = await response.json();
 
     if (!data.ok) {
@@ -20,6 +25,14 @@ async function caricaCatalogoStrutture() {
     grid.innerHTML = data.strutture.map(renderCardStruttura).join("");
     inizializzaFiltriCatalogo();
   } catch (error) {
+    const struttureStatiche = window.SUMMER_DATA?.strutture || [];
+
+    if (struttureStatiche.length > 0) {
+      grid.innerHTML = struttureStatiche.map(renderCardStruttura).join("");
+      inizializzaFiltriCatalogo();
+      return;
+    }
+
     grid.innerHTML = `<div class="errore">${escapeHtml(error.message)}</div>`;
   }
 }

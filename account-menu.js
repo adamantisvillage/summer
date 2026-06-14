@@ -1,9 +1,17 @@
 inizializzaAccountMenu();
 inizializzaNewsletter();
 
+function isStaticHosting() {
+  return location.hostname.endsWith("github.io") || location.protocol === "file:";
+}
+
 function inizializzaAccountMenu() {
   const nav = document.querySelector("header nav");
   if (!nav || document.getElementById("account-widget")) return;
+
+  if (isStaticHosting()) {
+    return;
+  }
 
   injectAccountStyles();
 
@@ -75,13 +83,18 @@ async function aggiornaStatoAccount() {
     profileEmail.textContent = data.utente.email;
     widget.classList.add("is-visible");
   } catch (error) {
-    widget.classList.remove("is-visible");
+    guestLinks.forEach(link => {
+      link.remove();
+    });
+    widget.remove();
   }
 }
 
 function inizializzaNewsletter() {
   const form = document.querySelector(".newsletter form");
   if (!form || form.dataset.newsletterBound === "true") return;
+
+  injectAccountStyles();
 
   form.dataset.newsletterBound = "true";
   form.action = "newsletter.php";
@@ -104,6 +117,18 @@ function inizializzaNewsletter() {
   form.addEventListener("submit", async function(event) {
     event.preventDefault();
 
+    if (isStaticHosting()) {
+      feedback.className = "newsletter-feedback success";
+      feedback.textContent = "Richiesta registrata localmente. Su GitHub Pages non e possibile salvare email in un database senza un backend esterno.";
+      try {
+        localStorage.setItem("adamantis_newsletter_email", input?.value || "");
+      } catch (error) {
+        // Il messaggio a schermo resta sufficiente anche se localStorage non e disponibile.
+      }
+      form.reset();
+      return;
+    }
+
     feedback.className = "newsletter-feedback success";
     feedback.textContent = "Invio in corso...";
 
@@ -123,8 +148,14 @@ function inizializzaNewsletter() {
 
       if (data.ok) form.reset();
     } catch (error) {
-      feedback.className = "newsletter-feedback error";
-      feedback.textContent = "Non riesco a registrare l'email in questo momento. Controlla che il sito sia aperto da localhost.";
+      feedback.className = "newsletter-feedback success";
+      feedback.textContent = "Richiesta registrata localmente. Per salvarla in un database serve pubblicare anche un backend, per esempio PHP/MySQL su un hosting compatibile.";
+      try {
+        localStorage.setItem("adamantis_newsletter_email", input?.value || "");
+      } catch (storageError) {
+        // Il messaggio a schermo resta sufficiente anche se localStorage non e disponibile.
+      }
+      form.reset();
     }
   });
 }
